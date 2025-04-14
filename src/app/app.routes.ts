@@ -1,10 +1,13 @@
-import { Routes } from '@angular/router';
+import { Routes ,RouterModule} from '@angular/router';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { ProductPageComponent } from './pages/product-page/product-page.component';
 import { CartPageComponent } from './pages/cart-page/cart-page.component';
 import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegistrationComponent } from './pages/registration/registration.component';
+import { CheckoutComponent } from './pages/checkout/checkout.component';
+
+
 
 export const routes: Routes = [
     { path: '', component: HomePageComponent },
@@ -13,5 +16,6 @@ export const routes: Routes = [
   { path: 'profile', component: ProfilePageComponent},
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegistrationComponent },
+  { path: 'checkout', component: CheckoutComponent },
 
 ];

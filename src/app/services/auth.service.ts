@@ -4,15 +4,29 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
+export interface User {
+  userId?: number;
+  UserName: string;
+  Email: string;
+  Password: string;
+ 
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private apiUrl = 'https://localhost:7247/api/Authenticate';
+  private apiUrl_r = 'https://localhost:7247/api/Users/register';
   private jwtHelper = new JwtHelperService();
   private authState = new BehaviorSubject<boolean>(this.isAuthenticated());
 
   constructor(private http: HttpClient) { }
+
+
+  register(user: User): Observable<User> {
+    return this.http.post<User>(this.apiUrl_r, user);
+  }
 
   login(credentials: { email: string, password: string }): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}`, credentials).pipe(

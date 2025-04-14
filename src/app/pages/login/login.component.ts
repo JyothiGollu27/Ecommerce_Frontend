@@ -28,7 +28,7 @@ export class LoginComponent {
           this.authService.saveToken(response.token);
           console.log('Login successful', response);
           this.errorMessage = '';
-          this.router.navigate(['/']);
+          this.router.navigate(['/products']);
         },
         error => {
           console.error('Login failed', error);
