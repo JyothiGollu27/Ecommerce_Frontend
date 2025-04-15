@@ -6,6 +6,7 @@ import { ProfilePageComponent } from './pages/profile-page/profile-page.componen
 import { LoginComponent } from './pages/login/login.component';
 import { RegistrationComponent } from './pages/registration/registration.component';
 import { CheckoutComponent } from './pages/checkout/checkout.component';
+import { OrderHistoryComponent } from './pages/order-history/order-history.component';
 
 
 
@@ -17,5 +18,6 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegistrationComponent },
   { path: 'checkout', component: CheckoutComponent },
+  { path: 'orders', component: OrderHistoryComponent },
 
 ];

@@ -1,32 +1,34 @@
-import { Component, OnInit, viewChild } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CartService } from '../../services/cart.service';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { OrderService } from '../../services/order.service';
 
 @Component({
   selector: 'app-checkout',
-  standalone:true,
-  imports:[CommonModule,FormsModule],
+  standalone: true,
+  imports: [CommonModule, FormsModule],
   templateUrl: './checkout.component.html',
   styleUrls: ['./checkout.component.css']
 })
 export class CheckoutComponent implements OnInit {
-  
-  cartItems:any[]=[];
-  totalPrice:number=0
-  constructor(private http: HttpClient, private cartService: CartService, private router: Router) {}
-  
+
+  cartItems: any[] = [];
+  totalPrice: number = 0;
+
+  constructor(
+    private cartService: CartService,
+    private orderService: OrderService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.cartItems = this.cartService.getCartItems();
-  this.totalPrice = this.cartService.getTotalCost();
+    this.totalPrice = this.cartService.getTotalCost();
   }
 
-  onSubmit(checkoutForm:NgForm) {
-    //const formValues=checkoutForm.value;
-
+  onSubmit(checkoutForm: NgForm) {
     const order = {
       userId: 1, // Replace with actual user ID
       totalPrice: this.totalPrice,
@@ -39,12 +41,27 @@ export class CheckoutComponent implements OnInit {
       }))
     };
 
-    this.http.post('/api/orders/checkout', order).subscribe(response => {
-      console.log('Order placed successfully', response);
-      this.cartService.clearCart();
-      this.router.navigate(['/order-confirmation']); // Redirect to order confirmation page
+    this.orderService.placeOrder(order).subscribe({
+      next: response => {
+        console.log('Order placed successfully', response);
+        alert('Order placed successfully');
+        this.cartService.clearCart();
+        this.router.navigate(['/products']); // Redirect to products page
+        this.storeOrderData(response);
+      },
+      error: error => {
+        console.error('There was an error!', error);
+        alert('Failed to place order. Please try again later.');
+      }
     });
   }
+
+  storeOrderData(order: any) {
+    // Retrieve existing order history from local storage
+    const existingOrderHistory = JSON.parse(localStorage.getItem('orderHistory') || '[]');
+    // Add the new order to the existing order history
+    existingOrderHistory.push(order);
+    // Store the updated order history back to local storage
+    localStorage.setItem('orderHistory', JSON.stringify(existingOrderHistory));
+  }
 }
-
-

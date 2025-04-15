@@ -5,8 +5,8 @@ import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-header',
-  standalone:true,
-  imports: [CommonModule,RouterModule],
+  standalone: true,
+  imports: [CommonModule, RouterModule],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
@@ -20,14 +20,23 @@ export class HeaderComponent implements OnInit {
       this.isAuthenticated = isAuthenticated;
     });
   }
-  
 
   signIn() {
-    this.router.navigate(['/login']);
+    if (!this.isAuthenticated) {
+      this.router.navigate(['/login']);
+    } else {
+
+      alert('You are already signed in.');
+      this.router.navigate(['/']);
+    }
   }
 
   signOut() {
-    this.authService.logout();
-    this.router.navigate(['/login']);
+    if (this.isAuthenticated) {
+      this.authService.logout();
+      this.router.navigate(['/login']);
+    } else {
+      alert('You are not signed in.');
+    }
   }
 }

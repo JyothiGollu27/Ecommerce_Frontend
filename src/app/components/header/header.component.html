@@ -4,8 +4,8 @@
     <a routerLink="/">Home</a>
     <a routerLink="/products">Products</a>
     <a routerLink="/cart">Cart</a>
-    <a routerLink="/profile">Profile</a>
-    <a *ngIf="!isAuthenticated" (click)="signIn()" style="float: right;">Sign In</a>
-    <a *ngIf="isAuthenticated" (click)="signOut()" style="float: right;">Sign Out</a>
+    <a routerLink="/orders">Orders</a>
+    <a (click)="signIn()" style="float: right;">Sign In</a>
+    <a (click)="signOut()" style="float: right; margin-right: 10px;">Sign Out</a>
   </nav>
 </header>
