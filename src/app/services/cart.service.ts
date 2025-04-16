@@ -15,21 +15,34 @@ export class CartService {
     this.loadCart();
   }
 
-  private getAuthHeaders(): HttpHeaders {
+  /*private getAuthHeaders(): HttpHeaders {
     const token = this.authService.getToken();
     return new HttpHeaders().set('Authorization', `Bearer ${token}`);
-  }
+  }*/
+
+    
+private getUserKey(): string {
+  const userEmail = this.authService.getEmail();
+  return `cart_${userEmail}`;
+   }
+  
 
   addToCart(product: Product) {
-    const cartItem: CartItem = {
-      cartItemId: this.cart.length + 1, // Example ID generation
-      productId: product.productId,
-      quantity: 1,
-      totalPrice: product.price,
-      product: product
-    };
-    this.cart.push(cartItem);
-    this.saveCart();
+    const existingCartItem = this.cart.find(item => item.productId === product.productId);
+    if (existingCartItem) {
+      alert(`${product.name} is already in the cart.`);
+    } else {
+      const cartItem: CartItem = {
+        cartItemId: this.cart.length + 1, // Example ID generation
+        productId: product.productId,
+        quantity: 1,
+        totalPrice: product.price,
+        product: product
+      };
+      this.cart.push(cartItem);
+      this.saveCart();
+      alert(`${product.name} added to cart successfully.`);
+    }
   }
 
   getCartItems(): CartItem[] {
@@ -63,14 +76,29 @@ export class CartService {
     this.saveCart();
   }
 
-  private saveCart() {
+  /*private saveCart() {
     localStorage.setItem('cart', JSON.stringify(this.cart));
-  }
+  }*/
+ 
+private saveCart() {
+   const userKey = this.getUserKey();
+   localStorage.setItem(userKey, JSON.stringify(this.cart));
+   }
+  
 
-  private loadCart() {
+  /*private loadCart() {
     const cartData = localStorage.getItem('cart');
     if (cartData) {
       this.cart = JSON.parse(cartData);
     }
+  }*/
+ 
+private loadCart() {
+   const userKey = this.getUserKey();
+   const cartData = localStorage.getItem(userKey);
+   if (cartData) {
+   this.cart = JSON.parse(cartData);
+   }
   }
+  
 }

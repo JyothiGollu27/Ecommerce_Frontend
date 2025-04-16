@@ -1,15 +1,12 @@
-body {
+.home-page {
   font-family: 'Arial', sans-serif;
   margin: 0;
   padding: 0;
-  background-image: url('https://tse4.mm.bing.net/th/id/OIP.KdlhJ0mI7279Hz3E-Ybw_wHaE-?w=1177&h=790&rs=1&pid=ImgDetMain'); /* Replace with your preferred image */
+  background-image: url('https://tse2.mm.bing.net/th/id/OIP.5eKrPyTnojpX9UvL47Gc0gHaE8?pid=ImgDet&w=474&h=316&rs=1'); /* Replace with your preferred image */
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
   color: white;
- }
- 
- .home-page {
   text-align: center;
   padding: 4rem 2rem;
   background: rgba(0, 0, 0, 0.6); /* Adding a semi-transparent overlay for readability */
@@ -17,7 +14,22 @@ body {
   max-width: 600px;
   margin: 100px auto;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
- }
+  }
+  .home-page::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('https://tse2.mm.bing.net/th/id/OIP.5eKrPyTnojpX9UvL47Gc0gHaE8?pid=ImgDet&w=474&h=316&rs=1'); /* Replace with your preferred image */
+    margin: 0;
+    padding: 0;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    z-index: -1; /* Ensure the overlay is behind the content */
+  }
  
  h1 {
   font-size: 2rem;
